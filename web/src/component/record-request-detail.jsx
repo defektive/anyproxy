@@ -192,7 +192,8 @@ class RecordRequestDetail extends React.Component {
         path: recordDetail.path,
         hostname: recordDetail.host,
         method: recordDetail.method
-      }
+      },
+      requestData: recordDetail.reqBody
     };
 
     return (
