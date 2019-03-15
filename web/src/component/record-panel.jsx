@@ -37,7 +37,7 @@ class RecordPanel extends React.Component {
 
   getRecordDetail(id) {
     this.props.dispatch(fetchRecordDetail(id));
-    this.props.stopRefresh();
+    // this.props.stopRefresh();
   }
 
   // get next detail with cursor, to go previous and next
