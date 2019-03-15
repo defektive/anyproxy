@@ -11,7 +11,7 @@ import JsonViewer from 'component/json-viewer';
 import ModalPanel from 'component/modal-panel';
 import { hideRecordDetail } from 'action/recordAction';
 import { selectText } from 'common/CommonUtil';
-import { curlify } from 'common/curlUtil';
+import { curlify } from 'common/CurlUtil';
 
 import Style from './record-detail.less';
 import CommonStyle from '../style/common.less';
