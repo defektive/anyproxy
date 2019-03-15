@@ -80,7 +80,6 @@ class HeaderMenu extends React.Component {
       },
       body: JSON.stringify({intercepting: false})
     });
-    // this.props.dispatch(stopIntercepting());
     this.setState({interactiveIntercept: false})
   }
 
@@ -93,7 +92,6 @@ class HeaderMenu extends React.Component {
       },
       body: JSON.stringify({intercepting: true})
     });
-    // this.props.dispatch(resumeIntercepting());
     this.setState({interactiveIntercept: true})
   }
 
