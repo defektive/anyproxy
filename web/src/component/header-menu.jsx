@@ -44,6 +44,8 @@ class HeaderMenu extends React.Component {
 
     this.stopRecording = this.stopRecording.bind(this);
     this.resumeRecording = this.resumeRecording.bind(this);
+    this.stopIntercepting = this.stopIntercepting.bind(this);
+    this.resumeIntercepting = this.resumeIntercepting.bind(this);
     this.clearAllRecord = this.clearAllRecord.bind(this);
     this.initEvent = this.initEvent.bind(this);
     this.fetchData = this.fetchData.bind(this);
@@ -67,6 +69,32 @@ class HeaderMenu extends React.Component {
   resumeRecording() {
     console.info('Resuming...');
     this.props.dispatch(resumeRecording());
+  }
+
+  stopIntercepting() {
+    console.info('Stopping...');
+    fetch('/api/intercept', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({intercepting: false})
+    });
+    // this.props.dispatch(stopIntercepting());
+    this.setState({interactiveIntercept: false})
+  }
+
+  resumeIntercepting() {
+    console.info('Resuming...');
+    fetch('/api/intercept', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({intercepting: true})
+    });
+    // this.props.dispatch(resumeIntercepting());
+    this.setState({interactiveIntercept: true})
   }
 
   clearAllRecord() {
@@ -140,7 +168,8 @@ class HeaderMenu extends React.Component {
           ruleSummary: response.ruleSummary,
           rootCADirPath: response.rootCADirPath,
           ipAddress: response.ipAddress,
-          port: response.port
+          port: response.port,
+          interactiveIntercept: response.interactiveIntercept
         });
         this.props.dispatch(updateLocalInterceptHttpsFlag(response.currentInterceptFlag));
         this.props.dispatch(updateLocalGlobalProxyFlag(response.currentGlobalProxyFlag));
@@ -165,6 +194,9 @@ class HeaderMenu extends React.Component {
 
     const stopMenuStyle = StyleBind('menuItem', { disabled: globalStatus.recording !== true });
     const resumeMenuStyle = StyleBind('menuItem', { disabled: globalStatus.recording === true });
+
+    const stopInterceptingMenuStyle = StyleBind('menuItem', { disabled: this.state.interactiveIntercept !== true });
+    const resumeInterceptingMenuStyle = StyleBind('menuItem', { disabled: this.state.interactiveIntercept === true });
 
     const runningTipStyle = StyleBind('menuItem', 'rightMenuItem', { active: this.state.runningDetailVisible });
 
@@ -227,6 +259,32 @@ class HeaderMenu extends React.Component {
       </a>
     );
 
+    const stopInterceptingMenu = (
+      <a
+        className={stopInterceptingMenuStyle}
+        href="javascript:void(0)"
+        onClick={this.stopIntercepting}
+      >
+        <div className={Style.filterIcon}>
+          <InlineSVG src={require('svg-inline-loader!assets/view-eye.svg')} />
+        </div>
+        <span>Intercept on</span>
+      </a>
+    );
+
+    const resumeInterceptingMenu = (
+      <a
+        className={resumeInterceptingMenuStyle}
+        href="javascript:void(0)"
+        onClick={this.resumeIntercepting}
+      >
+        <div className={Style.stopIcon} style={{background: 'red'}}>
+          <InlineSVG src={require('svg-inline-loader!assets/view-eye.svg')} />
+        </div>
+        <span>Intercept off</span>
+      </a>
+    );
+
     const filterMenu = (
       <a
         className={showFilterMenuStyle}
@@ -244,6 +302,7 @@ class HeaderMenu extends React.Component {
       <div className={Style.wrapper} >
         <div className={Style.menuList} >
           {globalStatus.recording ? stopRecordingMenu : resumeRecordingMenu}
+          {this.state.interactiveIntercept ? stopInterceptingMenu : resumeInterceptingMenu}
           <a
             className={Style.menuItem}
             href="javascript:void(0)"
