@@ -7,6 +7,7 @@ import React, { PropTypes } from 'react';
 import ClassBind from 'classnames/bind';
 import { Menu, Table, notification, Spin, Button} from 'antd';
 import clipboard from 'clipboard-js'
+import RequestModifier from 'component/request-modifier';
 import JsonViewer from 'component/json-viewer';
 import ModalPanel from 'component/modal-panel';
 import { hideRecordDetail } from 'action/recordAction';
@@ -173,18 +174,6 @@ class RecordRequestDetail extends React.Component {
 
   getModifyPanel() {
     const { recordDetail } = this.props;
-    const requestBody = recordDetail.reqBody;
-
-    const reqDownload = <a href={`/fetchReqBody?id=${recordDetail.id}&_t=${Date.now()}`} target="_blank">download</a>;
-    const getReqBodyContent = () => {
-      const bodyLength = requestBody.length;
-      if (bodyLength > MAXIMUM_REQ_BODY_LENGTH) {
-        return reqDownload;
-      } else {
-        return <div>{requestBody}</div>
-      }
-    }
-
     const modifiable = this.state.userModifiedJson || {
       protocol: recordDetail.protocol,
       requestOptions: {
@@ -198,6 +187,7 @@ class RecordRequestDetail extends React.Component {
 
     return (
       <div className={Style.reqBody} >
+
       <div>
       <JSONTree data={modifiable} theme={theme} invertTheme={false} shouldExpandNode={()=>true}  />
       </div>
@@ -284,6 +274,7 @@ class RecordRequestDetail extends React.Component {
           <div className={CommonStyle.whiteSpace10} />
           {this.getReqBodyDiv()}
         </div>
+        <RequestModifier recordDetail={recordDetail} />
 
         <div className={Style.section} >
           <div >

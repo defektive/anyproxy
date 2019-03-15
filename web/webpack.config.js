@@ -18,6 +18,7 @@ const defineProperty = new webpack.DefinePlugin({
 });
 
 module.exports = {
+  devtool: 'inline-source-map',
   entry: ['whatwg-fetch', 'babel-polyfill', path.join(__dirname, './src/index.jsx')],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -106,7 +107,7 @@ module.exports = {
   plugins: [
     extractCss,
     defineProperty,
-    new UglifyJsPlugin()
+    // new UglifyJsPlugin()
   ],
   stats: {
     children: false
