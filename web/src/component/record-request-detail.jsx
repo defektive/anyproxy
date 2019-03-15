@@ -55,36 +55,14 @@ class RecordRequestDetail extends React.Component {
     };
 
     this.copyCurlCmd = this.copyCurlCmd.bind(this);
-    this.sendModifiedRequest = this.sendModifiedRequest.bind(this);
-    this.handleRequestChange = this.handleRequestChange.bind(this);
   }
 
   static propTypes = {
     requestRecord: PropTypes.object
   }
 
-  getInitialState () {
-    return {userModifiedJson: false};
-  }
-
-  handleRequestChange(event) {
-    this.setState({userModifiedJson: JSON.parse(event.target.value)});
-  }
-
   onSelectText(e) {
     selectText(e.target);
-  }
-
-  sendModifiedRequest(e) {
-    fetch(`/api/request/${this.props.recordDetail.id}`, {
-      method: 'post',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        modifiedRequest: this.state.userModifiedJson
-      })
-    })
   }
 
   getLiDivs(targetObj) {
@@ -172,34 +150,6 @@ class RecordRequestDetail extends React.Component {
     );
   }
 
-  getModifyPanel() {
-    const { recordDetail } = this.props;
-    const modifiable = this.state.userModifiedJson || {
-      protocol: recordDetail.protocol,
-      requestOptions: {
-        headers: recordDetail.reqHeader,
-        path: recordDetail.path,
-        hostname: recordDetail.host,
-        method: recordDetail.method
-      },
-      requestData: recordDetail.reqBody
-    };
-
-    return (
-      <div className={Style.reqBody} >
-
-      <div>
-      <JSONTree data={modifiable} theme={theme} invertTheme={false} shouldExpandNode={()=>true}  />
-      </div>
-
-      <div>
-      <textarea style={{width: '100%', height: '400px'}} onChange={this.handleRequestChange} value={JSON.stringify(modifiable, null, 4)} />
-      </div>
-      <Button type="primary" onClick={this.sendModifiedRequest} >Send</Button>
-      </div>
-    );
-  }
-
   notify(message, type = 'info', duration = 1.6, opts = {}) {
     notification[type]({ message, duration, ...opts })
   }
@@ -275,14 +225,6 @@ class RecordRequestDetail extends React.Component {
           {this.getReqBodyDiv()}
         </div>
         <RequestModifier recordDetail={recordDetail} />
-
-        <div className={Style.section} >
-          <div >
-            <span className={CommonStyle.sectionTitle}>Modify?</span>
-          </div>
-          <div className={CommonStyle.whiteSpace10} />
-          {this.getModifyPanel()}
-        </div>
       </div>
     );
   }
