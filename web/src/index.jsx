@@ -13,6 +13,7 @@ import reducer from 'reducer/rootReducer';
 import HeaderMenu from 'component/header-menu';
 import RecordPanel from 'component/record-panel';
 import RecordFilter from 'component/record-filter';
+import Repeater from 'component/repeater';
 import MapLocal from 'component/map-local';
 import WsListener from 'component/ws-listener';
 import RecordDetail from 'component/record-detail';
@@ -25,6 +26,7 @@ import CommonStyle from './style/common.less';
 
 const {
   RECORD_FILTER: RECORD_FILTER_MENU_KEY,
+  REPEATER: REPEATER_MENU_KEY,
   MAP_LOCAL: MAP_LOCAL_MENU_KEY,
   ROOT_CA: ROOT_CA_MENU_KEY
 } = MenuKeyMap;
@@ -184,6 +186,11 @@ class App extends React.Component {
         break;
       }
 
+      case REPEATER_MENU_KEY: {
+        middlePanel = <Repeater />;
+        break;
+      }
+
       case MAP_LOCAL_MENU_KEY: {
         middlePanel = <MapLocal />;
         break;
@@ -256,7 +263,7 @@ class App extends React.Component {
 
     return (
       <div className={Style.indexWrapper} >
-        {this.state.inAppMode ? null : leftMenuDiv}
+        {this.state.inAleftMenuppMode ? null : leftMenuDiv}
         <div className={Style.middlePanel} >
           {this.getMiddlePanel()}
         </div>

@@ -2,6 +2,8 @@ export const STOP_RECORDING = 'STOP_RECORDING';
 export const RESUME_RECORDING = 'RESUME_RECORDING';
 export const SHOW_FILTER = 'SHOW_FILTER';
 export const HIDE_FILTER = 'HIDE_FILTER';
+export const SHOW_REPEATER = 'SHOW_REPEATER';
+export const HIDE_REPEATER = 'HIDE_REPEATER';
 export const UPDATE_FILTER = 'UPDATE_FILTER';
 export const SHOW_MAP_LOCAL = 'SHOW_MAP_LOCAL';
 export const HIDE_MAP_LOCAL = 'HIDE_MAP_LOCAL';
@@ -156,6 +158,18 @@ export function showRootCA() {
 export function hideRootCA() {
   return {
     type: HIDE_ROOT_CA
+  };
+}
+
+export function showRepeater() {
+  return {
+    type: SHOW_REPEATER
+  };
+}
+
+export function hideRepeater() {
+  return {
+    type: HIDE_REPEATER
   };
 }
 

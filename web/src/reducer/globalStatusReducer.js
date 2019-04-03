@@ -38,6 +38,8 @@ import {
   UPDATE_LOCAL_GLOBAL_PROXY_FLAG,
   HIDE_ROOT_CA,
   SHOW_ROOT_CA,
+  SHOW_REPEATER,
+  HIDE_REPEATER,
   UPDATE_CAN_LOAD_MORE,
   INCREASE_DISPLAY_RECORD_LIST,
   UPDATE_SHOULD_CLEAR_RECORD,
@@ -166,6 +168,18 @@ function requestListReducer(state = defaultStatus, action) {
     }
 
     case HIDE_ROOT_CA: {
+      const newState = Object.assign({}, state);
+      newState.activeMenuKey = '';
+      return newState;
+    }
+
+    case SHOW_REPEATER: {
+      const newState = Object.assign({}, state);
+      newState.activeMenuKey = MenuKeyMap.REPEATER;
+      return newState;
+    }
+
+    case HIDE_REPEATER: {
       const newState = Object.assign({}, state);
       newState.activeMenuKey = '';
       return newState;

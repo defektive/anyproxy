@@ -82,10 +82,10 @@ class ResizablePanel extends React.Component {
 
         const { dragBarLeft, contentLeft } = this.state;
         const propsLeft = this.props.left;
-        const dragBarStyle = dragBarLeft || propsLeft ? { 'left': dragBarLeft || propsLeft } : null;
-        const contentStyle = contentLeft || propsLeft ? { 'left': contentLeft || propsLeft } : null;
+        const dragBarStyle = dragBarLeft || propsLeft ? { 'right': dragBarLeft || propsLeft } : null;
+        const contentStyle = contentLeft || propsLeft ? { 'right': contentLeft || propsLeft } : null;
 
-        const modalStyle = this.props.hideBackModal ? contentStyle : { 'left': 0 };
+        const modalStyle = this.props.hideBackModal ? contentStyle : { 'right': 0 };
         return (
             <div className={Style.wrapper} onClick={this.onClose} style={modalStyle} >
                 <div className={Style.contentWrapper} style={contentStyle} >

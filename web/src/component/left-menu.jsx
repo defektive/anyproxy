@@ -12,6 +12,7 @@ import ClassBind from 'classnames/bind';
 
 import {
   showFilter,
+  showRepeater,
   showRootCA
 } from 'action/globalStatusAction';
 
@@ -20,7 +21,9 @@ import { MenuKeyMap } from 'common/Constant';
 const StyleBind = ClassBind.bind(Style);
 const {
   RECORD_FILTER: RECORD_FILTER_MENU_KEY,
-  ROOT_CA: ROOT_CA_MENU_KEY
+  REPEATER: REPEATER_MENU_KEY,
+  MAP_LOCAL: MAP_LOCAL_MENU_KEY,
+  ROOT_CA: ROOT_CA_MENU_KEY,
 } = MenuKeyMap;
 
 class LeftMenu extends React.Component {
@@ -34,6 +37,7 @@ class LeftMenu extends React.Component {
     // this.showMapLocal = this.showMapLocal.bind(this);
     this.showFilter = this.showFilter.bind(this);
     this.showRootCA = this.showRootCA.bind(this);
+    this.showRepeater = this.showRepeater.bind(this);
   }
 
   static propTypes = {
@@ -53,6 +57,11 @@ class LeftMenu extends React.Component {
     this.props.dispatch(showRootCA());
   }
 
+  showRepeater() {
+    console.log('asdasd');
+    this.props.dispatch(showRepeater());
+  }
+
   render() {
     const { filterStr, activeMenuKey, recording } = this.props.globalStatus;
 
@@ -63,6 +72,10 @@ class LeftMenu extends React.Component {
 
     const rootCAMenuStyle = StyleBind('menuItem', {
       active: activeMenuKey === ROOT_CA_MENU_KEY
+    });
+
+    const repeaterMenuStyle = StyleBind('menuItem', {
+      active: activeMenuKey === REPEATER_MENU_KEY
     });
 
     const wrapperStyle = StyleBind('wrapper', { inApp: this.state.inAppMode });
@@ -108,6 +121,18 @@ class LeftMenu extends React.Component {
               <InlineSVG src={require('svg-inline-loader!assets/download.svg')} />
             </span>
             <span>RootCA</span>
+          </a>
+
+          <a
+            className={repeaterMenuStyle}
+            href="javascript:void(0)"
+            onClick={this.showRepeater}
+            title="Request Repeater"
+          >
+            <span className={Style.filterIcon}>
+              <InlineSVG src={require('svg-inline-loader!assets/retweet.svg')} />
+            </span>
+            <span>Repeater</span>
           </a>
         </div>
         <div className={Style.bottom} >
